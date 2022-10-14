@@ -21,7 +21,7 @@ Node >> nextNode: aNode [
 
 { #category : #accessing }
 Node >> prevNode [ 
-	^nextNode 
+	^prevNode 
 ]
 
 { #category : #accessing }

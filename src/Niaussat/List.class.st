@@ -14,30 +14,32 @@ List >> add: aValue [
 	|aNode|
 	aNode := Node new value: aValue.
 	
-	self isEmpty
+	(self isEmpty)
 	
-	ifTrue: [begin := aNode.
-				end :=aNode] 
+	ifTrue: [self begin: aNode.
+				self end: aNode] 
 		
-	ifFalse: [
-		
+	ifFalse: [  end nextNode: aNode.
 					aNode prevNode:  end. 
-					end nextNode: aNode. 
-					 end := aNode. ].
+					end := aNode. ].
 	 size := size + 1.
 ]
 
 { #category : #accessing }
-List >> at: index [
+List >> at: n [
 |tempo_node |
-	1 to: index do: [:node| tempo_node := node nextNode ].
+tempo_node := begin.
+	"1 to: n do: [:index| tempo_node nextNode: self nextNode ;prevNode: self prevNode;
+		value: self value]."
+	1 to: n do: [:index| tempo_node := tempo_node nextNode ].
 	^tempo_node. 
 ]
 
 { #category : #accessing }
-List >> at: index put: aValue [
-|tempo_node|
-	1 to: index do: [:node| tempo_node := node nextNode ].
+List >> at: n put: aValue [
+|tempo_node |
+tempo_node := begin.
+	1 to: n do: [:index| tempo_node := tempo_node nextNode ].
 	tempo_node value: aValue.
 ]
 
@@ -71,4 +73,22 @@ List >> initialize [
 { #category : #test }
 List >> isEmpty [
 	^(begin isNil)
+]
+
+{ #category : #accessing }
+List >> removeAt: n [
+|tempo_node|
+	tempo_node := (self at:n).
+	
+	(tempo_node nextNode) prevNode: (tempo_node prevNode).
+	(tempo_node prevNode) nextNode: (tempo_node nextNode).
+	
+size := size-1
+	
+	 
+]
+
+{ #category : #accessing }
+List >> size [
+	^size
 ]
