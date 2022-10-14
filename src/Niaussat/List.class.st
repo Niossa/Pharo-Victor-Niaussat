@@ -3,16 +3,28 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'begin',
-		'end'
+		'end',
+		'size'
 	],
 	#category : #Niaussat
 }
 
 { #category : #adding }
-List >> add: aNode [
-	 aNode prevNode: self end.
-	 end nextNode: aNode.
-	 self end: aNode.
+List >> add: aValue [
+	|aNode|
+	aNode := Node new value: aValue.
+	
+	self isEmpty
+	
+	ifTrue: [begin := aNode.
+				end :=aNode] 
+		
+	ifFalse: [
+		
+					aNode prevNode:  end. 
+					end nextNode: aNode. 
+					 end := aNode. ].
+	 size := size + 1.
 ]
 
 { #category : #accessing }
@@ -51,14 +63,12 @@ List >> end: aNode [
 
 { #category : #initialization }
 List >> initialize [ 
-	super initialize 
+	super initialize.
+	size := 0.
 	
 ]
 
 { #category : #test }
 List >> isEmpty [
-	|l|
-	l := List new.
-	
-	self assert: l isEmpty.
+	^(begin isNil)
 ]
